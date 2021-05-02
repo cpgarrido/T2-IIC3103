@@ -31,7 +31,7 @@ def get_id(name):
     return string
 ######################################  C L A S S E S  ############################################
 class Artist(db.Model):
-    id = db.Column(db.String(100), primary_key = True, unique=True)
+    id = db.Column(db.String(100), primary_key = True)
     name = db.Column(db.String(100))
     age= db.Column(db.Integer)
     # albums = db.relationship('Album', backref='Artista', lazy=True)
@@ -43,9 +43,9 @@ class Artist(db.Model):
         self.id = get_id(name)
         self.name = name
         self.age = age
-        self.albums = 'http://localhost:5000/artists/'+self.id+'/albums'
-        self.tracks = 'http://localhost:5000/artists/'+self.id+'/tracks'
-        self.url = 'http://localhost:5000/artists/'+self.id
+        self.albums = 'https://iic3103-t2-cpgarrido.herokuapp.com/artists/'+self.id+'/albums'
+        self.tracks = 'https://iic3103-t2-cpgarrido.herokuapp.com/artists/'+self.id+'/tracks'
+        self.url = 'https://iic3103-t2-cpgarrido.herokuapp.com/artists/'+self.id
 
     def to_String(self):
         return ({'id':self.id, 
@@ -57,7 +57,7 @@ class Artist(db.Model):
 
 
 class Album(db.Model):
-    id = db.Column(db.String(100), primary_key = True, unique=True)
+    id = db.Column(db.String(100), primary_key = True)
     name = db.Column(db.String(100))
     artist_id = db.Column(db.String(200), db.ForeignKey('artist.id'), nullable=False)
     genre = db.Column(db.String(100))
@@ -69,9 +69,9 @@ class Album(db.Model):
         self.name = name
         self.artist_id = artist_id
         self.genre = genre
-        self.artist = 'http://localhost:5000/artists/'+self.artist_id
-        self.tracks = 'http://localhost:5000/albums/'+self.id+'/tracks'
-        self.url = 'http://localhost:5000/albums/'+self.id
+        self.artist = 'https://iic3103-t2-cpgarrido.herokuapp.com/artists/'+self.artist_id
+        self.tracks = 'https://iic3103-t2-cpgarrido.herokuapp.com/albums/'+self.id+'/tracks'
+        self.url = 'https://iic3103-t2-cpgarrido.herokuapp.com/albums/'+self.id
     def to_String(self):
         return ({'id':self.id, 
         'artist_id': self.artist_id,
@@ -82,7 +82,7 @@ class Album(db.Model):
         'self':self.url})
 
 class Track(db.Model):
-    id = db.Column(db.String(100), primary_key = True, unique=True)
+    id = db.Column(db.String(100), primary_key = True)
     name = db.Column(db.String(100))
     album_id = db.Column(db.String(100), db.ForeignKey('album.id'), nullable=False)
     duration = db.Column(db.Float)
@@ -97,9 +97,9 @@ class Track(db.Model):
         self.album_id = album_id
         self.duration = duration
         self.times_played = n
-        self.artist = 'http://localhost:5000/artists/'+artist_id
-        self.album = 'http://localhost:5000/albums/'+self.album_id
-        self.url = 'http://localhost:5000/tracks/'+self.id
+        self.artist = 'https://iic3103-t2-cpgarrido.herokuapp.com/artists/'+artist_id
+        self.album = 'https://iic3103-t2-cpgarrido.herokuapp.com/albums/'+self.album_id
+        self.url = 'https://iic3103-t2-cpgarrido.herokuapp.com/tracks/'+self.id
 
     def to_String(self):
         return ({'id':self.id, 
@@ -218,7 +218,6 @@ def create_track(album_id):
                 #canción ya existe
                 t = Track.query.filter_by(id = track["id"]).first()
                 return t.to_String(), 409
-            
         album = Album.query.get(album_id)
         artist_id = album.artist_id
         new_track = Track(name, album_id, duration, artist_id, 0)
