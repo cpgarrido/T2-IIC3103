@@ -6,14 +6,13 @@ from base64 import b64encode
 
 
 ######################################  I N I T  ############################################
-def create_app():
-    app = Flask(__name__)
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    #data base
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['JSON_SORT_KEYS'] = False
-    return app
+app = Flask(__name__)
+basedir = os.path.abspath(os.path.dirname(__file__))
+#data base
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JSON_SORT_KEYS'] = False
+
    
 #INIT DB
 db = SQLAlchemy(app)
@@ -131,6 +130,9 @@ track_schema  = TrackSchema()
 tracks_schema  = TrackSchema(many = True)
 
 ######################################  R E Q U E S T S ############################################
+@app.route('/')
+def index():
+    return "<h1> Deployed to Heroku</h1>"
 ######################## POST #############################
 ### CREATE AN ARTIST ###
 @app.route('/artists', methods = ['POST'])       
