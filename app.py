@@ -319,6 +319,7 @@ def put_artist_tracks(artist_id):
             all_tracks = Track.query.filter_by(album_id = album['id']).all()
             for track in all_tracks:
                 track.play()
+                db.session.commit()
         return "todas las canciones del artista fueron reproducidas", 200
     else:
         return "artista no encontrado", 404
@@ -331,6 +332,7 @@ def put_album_tracks(album_id):
         all_tracks = Track.query.filter_by(album_id = album_id).all()
         for track in all_tracks:
             track.play()
+            db.session.commit()
         return "todas las canciones del álbum fueron reproducidas", 200
     else:
         return "álbum no encontrado", 404  
@@ -341,6 +343,7 @@ def put_track(track_id):
     track = Track.query.get(track_id)
     if track:
         track.play()
+        db.session.commit()
         return "canción reproducida", 200
     else:
         return "canción no encontrado", 404  
