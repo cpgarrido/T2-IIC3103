@@ -10,7 +10,7 @@ app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 #data base
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE')
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://zyyytivvangilw:2404ef200646507dbc8c1db3e39bf649f7179e24756d4a7a79ee63c48dcd5ec3@ec2-35-174-35-242.compute-1.amazonaws.com:5432/dbip9e6tg26bo6"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JSON_SORT_KEYS'] = False
 
