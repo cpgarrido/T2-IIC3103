@@ -3,8 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
 from base64 import b64encode
-import click
-from flask.cli import with_appcontext
+
 
 
 
@@ -13,7 +12,7 @@ app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 #data base
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://zyyytivvangilw:2404ef200646507dbc8c1db3e39bf649f7179e24756d4a7a79ee63c48dcd5ec3@ec2-35-174-35-242.compute-1.amazonaws.com:5432/dbip9e6tg26bo6"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'DATABASE_URL'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JSON_SORT_KEYS'] = False
 
@@ -23,11 +22,8 @@ db = SQLAlchemy(app)
 #INIT MARSHMALLOW
 ma = Marshmallow(app)
 
-@click.command(name = 'create_tables')
-@with_appcontext
-def create_tables():
-    db.create_all()
-    
+
+
 def get_id(name):
     string = b64encode(name.encode()).decode('utf-8')
     if len(string)>22:
