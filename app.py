@@ -12,7 +12,7 @@ app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 #data base
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost/DATABASE_URL'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'HEROKU_POSTGRESQL_RED_URL'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JSON_SORT_KEYS'] = False
 
@@ -395,4 +395,5 @@ def delete_track(track_id):
         return "canción inexistente", 404
 
 ######################################  R U N   S E R V E R  #####################################
-
+if __name__ == '__main__':
+    app.run(debug=True)
