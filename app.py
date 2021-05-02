@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
 from base64 import b64encode
+import click
+from flask.cli import with_appcontext
+
 
 
 ######################################  I N I T  ############################################
@@ -20,6 +23,11 @@ db = SQLAlchemy(app)
 #INIT MARSHMALLOW
 ma = Marshmallow(app)
 
+@click.command(name = 'create_tables')
+@with_appcontext
+def create_tables():
+    db.create_all()
+    
 def get_id(name):
     string = b64encode(name.encode()).decode('utf-8')
     if len(string)>22:
