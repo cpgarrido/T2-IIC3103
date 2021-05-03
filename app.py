@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
-from base64 import b64encode
+import base64 
 
 
 
@@ -24,8 +24,8 @@ ma = Marshmallow(app)
 
 
 
-def get_id(name):
-    string = b64encode(name.encode()).decode('utf-8')
+def get_id(str):
+    string = base64.b64encode(str.encode()).decode("utf-8") 
     if len(string)>22:
         string = string[:22]
     return string
@@ -65,7 +65,7 @@ class Album(db.Model):
     artist = db.Column(db.String(200))  #url
     url = db.Column(db.String(200))    #url
     def __init__(self, name, genre, artist_id):
-        self.id = get_id(name)
+        self.id = get_id(name+":"+artist_id)
         self.name = name
         self.artist_id = artist_id
         self.genre = genre
@@ -92,7 +92,7 @@ class Track(db.Model):
     url = db.Column(db.String(200))    #url
 
     def __init__(self, name, album_id, duration, artist_id, n):
-        self.id = get_id(name)
+        self.id = get_id(name+":"+album_id)
         self.name = name
         self.album_id = album_id
         self.duration = duration
